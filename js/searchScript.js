@@ -43,6 +43,6 @@ function goBack(){
   window.AppInventor.setWebViewString(JSON.stringify({
     isValid: true,        
     action: 'goBack',     // Linha 1                
-    goToScreen: 'Screen1' 
+    goToScreen: 'Home' 
   }));  
 }

@@ -21,6 +21,12 @@ header {
     height: 30px;
 
     margin-right: 10px;
+
+    transition: filter 0.2s;
+    cursor: pointer;
+}
+.searchIcon:hover {
+    filter: opacity(0.5);
 }
 .localizacaoContainer {
     display: flex;

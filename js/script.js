@@ -31,3 +31,13 @@ function fetchApi(url, targetConfirmados, targetRecuperados, targetMortos, targe
 }
 
 fetchApi('https://covid-api.mmediagroup.fr/v1/cases?country=Brazil', '.numerosConfirmados', '.numerosRecuperados', '.numerosMortes', '.numerosAtivos');
+
+function searchButtonClicked(){
+  console.log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+  window.AppInventor.setWebViewString(JSON.stringify({
+    isValid: true,
+    action: 'goToScreen',   
+    value,              
+    goToScreen: 'Search',
+  })); 
+}
