@@ -1,8 +1,14 @@
+body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
 p, h1, h2, h3, h4, h5, h6, span, ul, li {
     font-family: helvetica, sans-serif;
     color: #555;
 }
 header {
+    padding: 10px 10px 10px 10px;
     display: flex;
     justify-content: space-between;
 }
@@ -15,4 +21,93 @@ header {
     height: 30px;
 
     margin-right: 10px;
+}
+.localizacaoContainer {
+    display: flex;
+    height: 50px;
+    width: 100vw;
+    background-color: #9C232B;
+    
+    align-items: center;
+    justify-content: center;
+
+}
+.localizacaoContainer h1{
+    color: #fff;
+}
+.informacoes {
+    padding: 0 15px;
+}
+.infoIconContainer {
+    display: flex;
+}
+.infoIcon {
+    display: block; 
+    margin: auto;
+    width: 24px;
+    height: 24px
+}
+.confirmadosContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    margin-top: 10px;
+    padding: 0 10px;
+}
+.numerosConfirmados{
+    margin-left: 10px;
+    font-size: 20px;
+    margin-top: 23px; /*Gambiarra*/
+}
+.infoContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    border-radius: 15px;
+
+    margin-top: 10px;
+    padding: 0 10px;
+}
+.ativos {
+    background-color: #B4B4B4;
+}
+.recuperados {
+    background-color: #CD2833;
+}
+.mortes {
+    background-color: #000;
+}
+.ativos *, 
+.recuperados *,
+.mortes * {
+    color: #fff;
+}
+.chartContainer {
+    display: flex;
+    justify-content: center;
+
+    margin-top: 20px;
+}
+.bandeira {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    
+    padding: 20px;
+}
+.iconeBandeiraContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.iconeBandeira{
+    justify-content: center;
+    height: 100px;
+    width: 100px;
+    color: #F7C631;
+    margin-right: 15px;
+}
+.bandeiraText h3 {
+    margin: -15px 0 -5px 0;
 }
