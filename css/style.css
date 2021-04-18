@@ -1,0 +1,18 @@
+p, h1, h2, h3, h4, h5, h6, span, ul, li {
+    font-family: helvetica, sans-serif;
+    color: #555;
+}
+header {
+    display: flex;
+    justify-content: space-between;
+}
+#logoText {
+    display: inline;
+    color: #9C232B;
+}
+.searchIcon {
+    width: 30px;
+    height: 30px;
+
+    margin-right: 10px;
+}
