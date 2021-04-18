@@ -117,3 +117,15 @@ header {
 .bandeiraText h3 {
     margin: -15px 0 -5px 0;
 }
+.dataAtualizacao {
+    background-color: #9C232B;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    justify-content: space-between;
+
+}
+.dataAtualizacao * {
+    color: #fff;
+    font-size: 15px;
+}

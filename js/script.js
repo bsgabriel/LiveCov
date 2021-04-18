@@ -22,7 +22,7 @@ function fetchApi(url, targetConfirmados, targetRecuperados, targetMortos, targe
     const indiceBandeira = ativos * 100 / population;
     if (indiceBandeira > 0.5) {
       console.log("vermelho")
-    } else if (indiceBandeira <= 0.5 && indiceBandeira > 2.3){
+    } else if (indiceBandeira <= 0.5 && indiceBandeira > 0.23){
       console.log("amarelo")
     } else {
       console.log("verde")
