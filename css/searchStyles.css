@@ -10,6 +10,30 @@ main {
   flex: 1;
   flex-direction: column;
 }
+.goBackContainer {
+  height: 40px;
+  width: 40px;
+  background-color: #9C232B;
+  border-radius: 50%;
+  
+  position: fixed;
+  display: flex;
+  
+  bottom: 30px;
+  left: 30px;
+  padding: 10px;
+  cursor: pointer;
+
+  transition: filter 0.2s;
+}
+.goBackContainer:hover{
+  filter: opacity(0.75);
+}
+.goBackIcon {
+  width: 42px;
+  height: 42px;
+  color: #fff;
+}
 .inputContainer {
   height: 50px;
   background-color: #e5e5e5;
@@ -22,6 +46,7 @@ main {
 
   margin: 0 30px;
   margin-top: 20px;
+  margin-bottom: -10px;
   padding-left: 30px;
 }
 #txtSearch {
@@ -45,14 +70,29 @@ section {
   margin: 0;
 }
 .listItem {
+  display: flex;
+  justify-content: space-between;
   padding: 10px 25px;
-  font-size: 30px;
+  font-size: 25px;
   font-family: Helvetica, sans-serif;
   cursor: pointer;
+  color: #555555;
 
   transition: filter 0.2s;
   border-bottom: 1px solid rgba(200, 200, 200, 0.4);
+  overflow: hidden;
+}
+.listItemSvg {
+  width: 24px;
+  height: 24px;
+  margin-bottom: -0.2rem;
+  color: #666;
 }
 .listItem:hover{
   filter: opacity(0.5);
+}
+.itemTextContainer {
+  width: calc(100% - 30px); 
+  background-color: '#f0f'; 
+  overflow: hidden;
 }
