@@ -111,7 +111,6 @@ header {
     justify-content: center;
     height: 100px;
     width: 100px;
-    color: #F7C631;
     margin-right: 15px;
 }
 .bandeiraText h3 {
@@ -128,4 +127,23 @@ header {
 .dataAtualizacao * {
     color: #fff;
     font-size: 15px;
+}
+.amarelo{
+    color: #F7C631;
+}
+.verde{
+    color: #43922b;
+}
+.vermelho{
+    color: #CD2833;
+}
+.carregandoImagem{
+    width: 60px;
+    color: gray;
+}
+.carregandoContainer{
+    display: flex; 
+    flex: 1; 
+    justify-content: center; 
+    align-items: center;
 }
