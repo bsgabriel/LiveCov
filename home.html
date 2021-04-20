@@ -11,34 +11,34 @@
   <link rel="stylesheet" href="./css/style.css">
 
   <script>
-     function renderChart(){
+    function renderChart() {
       //o gráfico está estático agora \/
       const options = {
-          series: [12212890, 371678, (13900091 - 12212890 - 371678)],
-          chart: {
-            type: 'pie',
-          },
-          colors: ['#CD2833','#000','#CCC'],
-          fill: {
-            colors: ['#CD2833','#000','#CCC']
-          },
-          labels: ['Recuperados', 'Mortes', 'Ativos'],
-          responsive: [{
-            breakpoint: 430,
-            options: {
-              chart: {
-                width: 250
-              },
-              legend: {
-                position: 'bottom'
-              }
+        series: [12212890, 371678, (13900091 - 12212890 - 371678)],
+        chart: {
+          type: 'pie',
+        },
+        colors: ['#CD2833', '#000', '#CCC'],
+        fill: {
+          colors: ['#CD2833', '#000', '#CCC']
+        },
+        labels: ['Recuperados', 'Mortes', 'Ativos'],
+        responsive: [{
+          breakpoint: 430,
+          options: {
+            chart: {
+              width: 250
+            },
+            legend: {
+              position: 'bottom'
             }
-          }]
-        };
+          }
+        }]
+      };
 
-        var chart = new ApexCharts(document.querySelector("#chart"), options);
-        chart.render();
-     }
+      var chart = new ApexCharts(document.querySelector("#chart"), options);
+      chart.render();
+    }
   </script>
   <title>Home Page</title>
 </head>
@@ -46,13 +46,15 @@
 <body onload="renderChart()">
   <header>
     <div>
-      <h1 id="logoText">Live<h1 style="display: inline;">Cov.</h1></h1>
+      <h1 id="logoText">Live<h1 style="display: inline;">Cov.</h1>
+      </h1>
     </div>
     <svg class="searchIcon" viewBox="0 0 24 24" onclick="searchButtonClicked()">
-      <path fill="currentColor" d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
+      <path fill="currentColor"
+        d="M9.5,3A6.5,6.5 0 0,1 16,9.5C16,11.11 15.41,12.59 14.44,13.73L14.71,14H15.5L20.5,19L19,20.5L14,15.5V14.71L13.73,14.44C12.59,15.41 11.11,16 9.5,16A6.5,6.5 0 0,1 3,9.5A6.5,6.5 0 0,1 9.5,3M9.5,5C7,5 5,7 5,9.5C5,12 7,14 9.5,14C12,14 14,12 14,9.5C14,7 12,5 9.5,5Z" />
     </svg>
   </header>
-  
+
   <div class="localizacaoContainer">
     <h1>Brasil</h1>
   </div>
@@ -73,11 +75,12 @@
         </div>
         <p class="numerosAtivos">-</p>
       </div>
-      
+
       <div class="recuperados infoContainer">
         <div class="infoIconContainer">
           <svg class="infoIcon" style="width: 20px; height: 20px; margin-right: 5px" viewBox="0 0 24 24">
-            <path fill="currentColor" d="M20.25 6C18.79 6 17.61 7.14 17.5 8.58L12.55 7.16C12.19 7.05 11.81 7.05 11.45 7.16L6.5 8.58C6.39 7.14 5.21 6 3.75 6C2.23 6 1 7.23 1 8.75V12.25C1 13.77 2.23 15 3.75 15H5.68C6.81 17.36 9.21 19 12 19S17.19 17.36 18.32 15H20.25C21.77 15 23 13.77 23 12.25V8.75C23 7.23 21.77 6 20.25 6M5 13.5H3.75C3.06 13.5 2.5 12.94 2.5 12.25V8.75C2.5 8.06 3.06 7.5 3.75 7.5S5 8.06 5 8.75V13.5M15 12L12.4 11.3C12.1 11.2 11.8 11.2 11.6 11.3L9 12V11L11.3 10.3C11.7 10.2 12.2 10.2 12.7 10.3L15 11V12M21.5 12.25C21.5 12.94 20.94 13.5 20.25 13.5H19V8.75C19 8.06 19.56 7.5 20.25 7.5S21.5 8.06 21.5 8.75V12.25Z" />
+            <path fill="currentColor"
+              d="M20.25 6C18.79 6 17.61 7.14 17.5 8.58L12.55 7.16C12.19 7.05 11.81 7.05 11.45 7.16L6.5 8.58C6.39 7.14 5.21 6 3.75 6C2.23 6 1 7.23 1 8.75V12.25C1 13.77 2.23 15 3.75 15H5.68C6.81 17.36 9.21 19 12 19S17.19 17.36 18.32 15H20.25C21.77 15 23 13.77 23 12.25V8.75C23 7.23 21.77 6 20.25 6M5 13.5H3.75C3.06 13.5 2.5 12.94 2.5 12.25V8.75C2.5 8.06 3.06 7.5 3.75 7.5S5 8.06 5 8.75V13.5M15 12L12.4 11.3C12.1 11.2 11.8 11.2 11.6 11.3L9 12V11L11.3 10.3C11.7 10.2 12.2 10.2 12.7 10.3L15 11V12M21.5 12.25C21.5 12.94 20.94 13.5 20.25 13.5H19V8.75C19 8.06 19.56 7.5 20.25 7.5S21.5 8.06 21.5 8.75V12.25Z" />
           </svg>
           <h2>Recuperados:</h2>
         </div>
@@ -99,10 +102,10 @@
       </div>
 
     </div>
-    
+
     <div class="bandeira">
       <div class="carregandoContainer">
-        <path fill="currentColor" d="M20.25 6C18.79 6 17.61 7.14 17.5 8.58L12.55 7.16C12.19 7.05 11.81 7.05 11.45 7.16L6.5 8.58C6.39 7.14 5.21 6 3.75 6C2.23 6 1 7.23 1 8.75V12.25C1 13.77 2.23 15 3.75 15H5.68C6.81 17.36 9.21 19 12 19S17.19 17.36 18.32 15H20.25C21.77 15 23 13.77 23 12.25V8.75C23 7.23 21.77 6 20.25 6M5 13.5H3.75C3.06 13.5 2.5 12.94 2.5 12.25V8.75C2.5 8.06 3.06 7.5 3.75 7.5S5 8.06 5 8.75V13.5M15 12L12.4 11.3C12.1 11.2 11.8 11.2 11.6 11.3L9 12V11L11.3 10.3C11.7 10.2 12.2 10.2 12.7 10.3L15 11V12M21.5 12.25C21.5 12.94 20.94 13.5 20.25 13.5H19V8.75C19 8.06 19.56 7.5 20.25 7.5S21.5 8.06 21.5 8.75V12.25Z" />
+        <img src="assets/loading.gif" alt="gif de loading" />
       </div>
       <div class="bandeiraText">
         <h1>Situação:</h1>
