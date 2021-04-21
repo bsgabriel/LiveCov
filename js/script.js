@@ -1,16 +1,59 @@
-function fetchApi(url, targetConfirmados, targetRecuperados, targetMortos, targetAtivos)
+function renderChart([actives, recovered, deaths]) {
+  const options = {
+    series: [recovered, deaths, actives],
+    chart: {
+      type: 'pie',
+    },
+    colors: ['#CD2833', '#000', '#CCC'],
+    fill: {
+      colors: ['#CD2833', '#000', '#CCC']
+    },
+    labels: ['Recuperados', 'Mortes', 'Ativos'],
+    responsive: [{
+      breakpoint: 430,
+      options: {
+        chart: {
+          width: 250
+        },
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }]
+  };
+
+  document.querySelector("#chart").innerHTML = '';
+  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  chart.render();
+}
+
+function setTitle(title){
+  document.querySelector('.localizacaoContainer').innerHTML = `<h1>${title}</h1>`
+}
+
+function fetchApi(country)
 {
-  fetch(url)
+  document.querySelector(".bandeira").innerHTML = `
+  <div class="carregandoContainer">
+    <img class="carregandoImagem" src="/assets/circularLoadingPrimary.gif" alt="Carregando" />
+  </div>
+  <div class="bandeiraText">
+    <h1>Situação:</h1>
+    <h4>---</h4>
+  </div>
+  `;
+
+  fetch(`https://covid-api.mmediagroup.fr/v1/cases?country=${country}`)
   .then((response) => {
     return response.json();
   })
   .then((data) => {
     const {confirmed, recovered, deaths, population} = data.All;
 
-    const numerosConfirmados = document.querySelector(targetConfirmados);
-    const numerosRecuperados = document.querySelector(targetRecuperados);
-    const numerosMortes = document.querySelector(targetMortos);
-    const numerosAtivos = document.querySelector(targetAtivos);
+    const numerosConfirmados = document.querySelector('.numerosConfirmados');
+    const numerosRecuperados = document.querySelector('.numerosRecuperados');
+    const numerosMortes = document.querySelector('.numerosMortes');
+    const numerosAtivos = document.querySelector('.numerosAtivos');
 
     const ativos = confirmed - deaths - recovered;
 
@@ -18,6 +61,18 @@ function fetchApi(url, targetConfirmados, targetRecuperados, targetMortos, targe
     numerosRecuperados.innerHTML = recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     numerosMortes.innerHTML = deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
     numerosAtivos.innerHTML = ativos.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+
+    /*
+      Se data.All.updated não for null ele vai usar aquele valor no front. 
+      Caso contrário ele vai dar um "Object.entries(data)" pra pegar um vetor
+      com todos as keys e seus valores. Ex: [['All', {...coisas}] , ['Paraná', {...coisas}]].
+      Dps de pegar isso ele vai pegar a primeira posição do segundo retorno dessas keys, que
+      nesse caso vai ser 'Paraná' e vai pegar o updated dele :)
+    */ 
+    const updated = data.All.updated 
+      ? data.All.updated 
+      : data[Object.entries(data)[1][0]].updated;
+    document.querySelector(".updated").innerHTML = new Date(updated).toLocaleDateString('pt-BR');
 
     let indiceBandeira = ativos * 100 / population;
     if (indiceBandeira > 0.5) {
@@ -51,7 +106,7 @@ function fetchApi(url, targetConfirmados, targetRecuperados, targetMortos, targe
       <div class="iconeBandeiraContainer verde">
         <svg class="iconeBandeira" viewBox="0 0 24 24">
           <path fill="currentColor" d="M23,10C23,8.89 22.1,8 21,8H14.68L15.64,3.43C15.66,3.33 15.67,3.22 15.67,3.11C15.67,2.7 15.5,2.32 15.23,2.05L14.17,1L7.59,7.58C7.22,7.95 7,8.45 7,9V19A2,2 0 0,0 9,21H18C18.83,21 19.54,20.5 19.84,19.78L22.86,12.73C22.95,12.5 23,12.26 23,12V10M1,21H5V9H1V21Z" />
-      </svg>
+         </svg>
       </div>
       <div class="bandeiraText">
         <h1>Situação:</h1>
@@ -60,16 +115,20 @@ function fetchApi(url, targetConfirmados, targetRecuperados, targetMortos, targe
       </div>
       `
     }
+
+    ajustFooter();
+    renderChart([ativos, recovered, deaths]);
   });
 }
 
 function searchButtonClicked(){
   window.AppInventor.setWebViewString(JSON.stringify({
-    isValid: true,
-    action: 'goToScreen',   
-    value,              
-    goToScreen: 'Search',
-  })); 
+    action: 'goToScreen',     // Linha 1                
+    goToScreen: 'Search' 
+  }));  
 }
 
-fetchApi('https://covid-api.mmediagroup.fr/v1/cases?country=Brazil', '.numerosConfirmados', '.numerosRecuperados', '.numerosMortes', '.numerosAtivos');
+function ajustFooter(){
+  document.getElementById("appFooter").style.position = 'relative';
+}
+

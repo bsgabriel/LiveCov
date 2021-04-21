@@ -8,42 +8,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <script src="./js/apexcharts.js"></script>
+  <script src="./js/script.js"></script>
   <link rel="stylesheet" href="./css/style.css">
-
-  <script>
-    function renderChart() {
-      //o gráfico está estático agora \/
-      const options = {
-        series: [12212890, 371678, (13900091 - 12212890 - 371678)],
-        chart: {
-          type: 'pie',
-        },
-        colors: ['#CD2833', '#000', '#CCC'],
-        fill: {
-          colors: ['#CD2833', '#000', '#CCC']
-        },
-        labels: ['Recuperados', 'Mortes', 'Ativos'],
-        responsive: [{
-          breakpoint: 430,
-          options: {
-            chart: {
-              width: 250
-            },
-            legend: {
-              position: 'bottom'
-            }
-          }
-        }]
-      };
-
-      var chart = new ApexCharts(document.querySelector("#chart"), options);
-      chart.render();
-    }
-  </script>
   <title>Home Page</title>
 </head>
 
-<body onload="renderChart()">
+<body>
   <header>
     <div>
       <h1 id="logoText">Live<h1 style="display: inline;">Cov.</h1>
@@ -56,7 +26,8 @@
   </header>
 
   <div class="localizacaoContainer">
-    <h1>Brasil</h1>
+    <!--h1>-</h1 -->
+    <img class="roundLoading" src="./assets/linearLoadingSecundary.gif" alt="Carregando"/>
   </div>
 
   <section>
@@ -105,21 +76,19 @@
 
     <div class="bandeira">
       <div class="carregandoContainer">
-        <img src="assets/loading.gif" alt="gif de loading" />
+        <img class="carregandoImagem" src="/assets/circularLoadingPrimary.gif" alt="Carregando" />
       </div>
       <div class="bandeiraText">
         <h1>Situação:</h1>
         <h4>---</h4>
       </div>
     </div>
-
-    <footer class="dataAtualizacao">
-      <h2>Atualizado em:</h2>
-      <p class="updated">16/04/2021</p>
-    </footer>
   </section>
-
-  <script src="./js/script.js"></script>
+  
+  <footer id="appFooter" class="dataAtualizacao">
+    <h2>Atualizado em:</h2>
+    <p class="updated">-</p>
+  </footer>
 </body>
 
 </html>
