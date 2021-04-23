@@ -16,10 +16,9 @@ function search(data){
   if (value === '') return; // Se deu true aqui, o usuário n clicou em nenhum botão e n digitou nada, então n é pra fazer nada
 
   window.AppInventor.setWebViewString(JSON.stringify({
-    isValid: true,
     action: 'search',   
     value,              
-    goToScreen: 'html2',
+    goToScreen: 'Screen1',
   }));  
 }
 
@@ -43,6 +42,6 @@ function goBack(){
   window.AppInventor.setWebViewString(JSON.stringify({
     isValid: true,        
     action: 'goBack',     // Linha 1                
-    goToScreen: 'Home' 
+    goToScreen: 'Screen1' 
   }));  
 }

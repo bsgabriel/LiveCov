@@ -12,6 +12,22 @@ header {
     display: flex;
     justify-content: space-between;
 }
+footer {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background-color: #9C232B;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    justify-content: space-between;
+    margin-top: auto;
+}
+footer * {
+    color: #fff;
+    font-size: 15px;
+}
 #logoText {
     display: inline;
     color: #9C232B;
@@ -116,18 +132,6 @@ header {
 .bandeiraText h3 {
     margin: -15px 0 -5px 0;
 }
-.dataAtualizacao {
-    background-color: #9C232B;
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    justify-content: space-between;
-
-}
-.dataAtualizacao * {
-    color: #fff;
-    font-size: 15px;
-}
 .amarelo{
     color: #F7C631;
 }
@@ -139,11 +143,13 @@ header {
 }
 .carregandoImagem{
     width: 60px;
-    color: gray;
 }
 .carregandoContainer{
     display: flex; 
     flex: 1; 
     justify-content: center; 
     align-items: center;
+}
+.roundLoading{
+    width: 50px
 }
