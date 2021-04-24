@@ -57,12 +57,12 @@ function fetchApi(country)
 
     const ativos = confirmed - deaths - recovered;
 
-    // animaAnimaisNumeros();
+    numerosConfirmados.innerText = confirmed;
+    numerosRecuperados.innerText = recovered;
+    numerosMortes.innerText = deaths;
+    numerosAtivos.innerText = ativos;
 
-    numerosConfirmados.innerHTML = confirmed.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    numerosRecuperados.innerHTML = recovered.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    numerosMortes.innerHTML = deaths.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-    numerosAtivos.innerHTML = ativos.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    animaAnimaisNumeros();
 
     /*
       Se data.All.updated não for null ele vai usar aquele valor no front. 
@@ -134,63 +134,25 @@ function ajustFooter(){
   document.getElementById("appFooter").style.position = 'relative';
 }
 
+// a funcao vai ser chamada cada vez que o fetch for feito 
+function animaAnimaisNumeros()
+{
+  const numeros = document.querySelectorAll('[data-numero]'); // Seleciona tudo que tem a data-numero (no caso, os P's contendo os números). Por isso o RegEx veio pra cá
 
-class AnimaNumeros{
-  constructor(numeros, observeTarget, observerClass) {
-    this.numeros = document.querySelectorAll(numeros);
-    this.observeTarget = document.querySelector(observeTarget);
-    this.observerClass = observerClass;
-    this.handleMutation = this.handleMutation.bind(this);
-  }
-
-  // Recebe um elemento do DOM com número em seu texto
-  // Incrementa a partir de 0 até o número final.
-  static incrementarNumero(numero) {
+  numeros.forEach((numero) => {
     const total = +numero.innerText;
-    const incremento = Math.floor(total / 100);
+    const incremento = Math.floor(total / 100); // Valor relativo ao numero total (como eram numeros bem distintos, não faria sentido incrementar de um em um)
     let start = 0;
     const timer = setInterval(() => {
-      start += incremento;
+      start = start + incremento;
       numero.innerText = start;
-      if(start > total) {
-        numero.innerText = total;
+      if(start > total) // Caso o numero passe do total (numero da api), ele deixa o texto como o total, aplica o RegEx e limpa o timer
+      {
+        numero.innerText = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
         clearInterval(timer);
       }
-    }, 25 * Math.random());
-  }
-
-  // Ativa incrementar número para cada número selecionado do dom.
-  animaNumeros() {
-    this.numeros.forEach((numero) => {
-      this.constructor.incrementarNumero(numero);
-    });
-  }
- 
-  // Função que ocorre quando a mutação ocorrer
-  handleMutation(mutation) {
-    if(mutation[0].target.classList.contains(this.observerClass)) {
-      this.observer.disconnect();
-      this.animaNumeros();
-    }
-  }
-
-  // Adiciona o MutationObserver para verificar quando a classe ativo é adicionada ao elemento target.
-  addMutationObserver() {
-    this.observer = new MutationObserver(this.handleMutation);  
-    this.observer.observe(this.observeTarget, {attributes: true}); 
-  }
-
-  init() {
-    if (this.numeros.length && this.observeTarget) {
-      this.addMutationObserver();
-    }
-
-    return this;
-  }
+    }, 10 * Math.random()) // Esse math.random é só pra deixar mais 'orgânico'
+  })
 }
 
-// Essa função ta sendo ativada na linha 60
-function animaAnimaisNumeros() {
-  const animaNumeros = new AnimaNumeros('[data-numero]','.numeros', 'ativo');
-  animaNumeros.init();
-}
+
