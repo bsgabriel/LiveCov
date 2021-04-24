@@ -1,0 +1,55 @@
+body {
+    padding: 0;
+    margin: 0;
+    overflow-x: hidden;
+}
+p, h1, h2, h3, h4, h5, h6, span, ul, li {
+    font-family: helvetica, sans-serif;
+    color: #555;
+}
+header {
+    padding: 10px 10px 10px 10px;
+    display: flex;
+    justify-content: space-between;
+}
+footer {
+    background-color: #9C232B;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    justify-content: space-between;
+    margin-top: auto;
+}
+footer * {
+    color: #fff;
+    font-size: 15px;
+}
+#chart{
+    margin-left: -1rem;
+}
+#logoText {
+    display: inline;
+    color: #9C232B;
+}
+.searchIcon {
+    width: 30px;
+    height: 30px;
+
+    margin-right: 10px;
+
+    transition: filter 0.2s;
+    cursor: pointer;
+}
+.localizacaoContainer {
+    display: flex;
+    height: 50px;
+    width: 100vw;
+    background-color: #9C232B;
+    
+    align-items: center;
+    justify-content: center;
+
+}
+.localizacaoContainer * {
+    color: #fff;
+}
