@@ -1,7 +1,33 @@
+var totalGlobalCases = '-';
+
+async function getTranslatedCountries(countriesNames){
+    // let body = countriesNames.map(c => {return {Text:c}})
+
+    console.log("body: ",JSON.stringify([{Text: "I'm testing"},{Text: "I'm testing"},{Text: "I'm testing"}]));
+
+    let headers = new Headers();
+
+    headers.append("x-rapidapi-key", "f56f7bd46fmsh9defc43b365ae9ap1c0889jsn66fd72bca751");
+    headers.append("Content-Type", "application/json");
+
+    fetch('https://microsoft-translator-text.p.rapidapi.com/translate?to=pt&api-version=3.0', {
+        headers,
+        method: 'POST',
+        body:  JSON.stringify([{Text: "I'm testing"},{Text: "I'm testing"},{Text: "I'm testing"}]),
+    })
+    .then(data => data.json())
+    .then(data => {
+        console.log("Data: ",data);
+        return data;
+    })
+
+    // return data;
+}
+
 async function getTopTenCountries(){
     const NUMBER_OF_COUNTRIES_IN_GRAPH = 10;
 
-    const data = fetch("https://covid-api.mmediagroup.fr/v1/cases?country=all")
+    const data = fetch("https://covid-api.mmediagroup.fr/v1/cases")
     .then(res => res.json())
     .then((data) => {
         const parsedData = Object.entries(data);
@@ -17,12 +43,11 @@ async function getTopTenCountries(){
         })
 
         parsedData.reverse();
-        parsedData.splice(NUMBER_OF_COUNTRIES_IN_GRAPH,parsedData.length - NUMBER_OF_COUNTRIES_IN_GRAPH); 
-        parsedData.splice(0, 1); // Tirar os dados "Global"
 
-        // for(let i = 0; i <= 10; i++){
-        //console.log(parsedData[i][0], " - ", parsedData[i][1].All.confirmed);
-        // }
+        totalGlobalCases = parsedData[0][1].All.confirmed.toLocaleString('pt-BR');
+
+        parsedData.splice(0, 1); // Tirar os dados "Global"
+        parsedData.splice(NUMBER_OF_COUNTRIES_IN_GRAPH,parsedData.length - NUMBER_OF_COUNTRIES_IN_GRAPH); 
 
         return parsedData;
     });
@@ -32,6 +57,8 @@ async function getTopTenCountries(){
 
 async function renderChart(){
     const topData = await getTopTenCountries();
+    const countriesNames = topData.map(country => country[0]);
+    const translatedCountries = await getTranslatedCountries(countriesNames);
 
     var options = {
         series: [{
@@ -79,7 +106,7 @@ async function renderChart(){
             colors: ['#fff']
         },
         xaxis: {
-            categories: topData.map(country => country[0]),
+            categories: topData.map(e => e[0]),
             show: false,
             labels: {
                 show: false
@@ -106,6 +133,36 @@ async function renderChart(){
     chart.render();
 }
 
-renderChart();
+async function initPage(){
+    await renderChart();
+    document.querySelector(".totalContainer").innerHTML = `
+        <h2>Total de casos:</h2>
+        <p class="numerosConfirmados" data-numero>${totalGlobalCases}</p>
+    `
+}
 
-  
+function goBack(){
+  window.AppInventor.setWebViewString(JSON.stringify({
+    action: 'goBack',            
+    goToScreen: 'Home' 
+  }));  
+}
+
+function animaNumeros() {
+  const numeros = document.querySelectorAll('[data-numero]'); 
+
+  numeros.forEach((numero) => {
+    const total = +numero.innerText;
+    const incremento = Math.floor(total / 100); 
+    let start = 0;
+    const timer = setInterval(() => {
+      start += incremento;
+      numero.innerText = start.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
+      if(start > total) 
+      {
+        numero.innerText = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
+        clearInterval(timer);
+      }
+    }, 10 * Math.random()) 
+  })
+}

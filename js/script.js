@@ -73,7 +73,7 @@ function fetchApi(country)
     */ 
     const updated = data.All.updated 
       ? data.All.updated 
-      : data[Object.entries(data)[1][0]].updated;
+      : Object.entries(data)[1][1].updated;
     document.querySelector(".updated").innerHTML = new Date(updated).toLocaleDateString('pt-BR');
 
     let indiceBandeira = ativos * 100 / population;
@@ -125,7 +125,7 @@ function fetchApi(country)
 
 function searchButtonClicked(){
   window.AppInventor.setWebViewString(JSON.stringify({
-    action: 'goToScreen',     // Linha 1                
+    action: 'goToScreen',               
     goToScreen: 'Search' 
   }));  
 }
@@ -144,8 +144,8 @@ function animaAnimaisNumeros()
     const incremento = Math.floor(total / 100); // Valor relativo ao numero total (como eram numeros bem distintos, não faria sentido incrementar de um em um)
     let start = 0;
     const timer = setInterval(() => {
-      start = start + incremento;
-      numero.innerText = start;
+      start += incremento;
+      numero.innerText = start.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
       if(start > total) // Caso o numero passe do total (numero da api), ele deixa o texto como o total, aplica o RegEx e limpa o timer
       {
         numero.innerText = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 

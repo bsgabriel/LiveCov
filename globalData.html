@@ -3,34 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=2.0">
 
     <script src="./js/globalDataScript.js"></script>
     <script src="./js/apexcharts.js"></script>
     <link rel="stylesheet" href="./css/globalDataStyles.css">
-
+    
     <title>Top cases page | LiveCov.</title>
 </head>
-<body>
+<body onload="initPage()">
     <header>
       <div>
-        <h1 id="logoText">Live<h1 style="display: inline;">Cov.</h1>
-        </h1>
+        <h1 id="logoText">Live<h1 style="display: inline;">Cov.</h1></h1>
       </div>
     </header>
-  
-    <div class="localizacaoContainer">
-      <h1>Dados Mundiais</h1>
-    </div>
-
-    <h3>Total de casos: [total]</h3>
     
-    <h3>Ranking Mundial de casos: </h3>
-    <div id="chart"></div>
+    <main>
+      <div class="localizacaoContainer">
+        <h1>Dados Mundiais</h1>
+      </div>
 
-    <p>Algumas outras informações...</p>
+      <div class="totalContainer">
+        <h2>Total de casos:</h2>
+        <p class="numerosConfirmados" data-numero>-</p>
+      </div>
+      
+      <h2 class="globalRankingTitle">Ranking Mundial de casos: </h2>
+      <div id="chart"></div>
 
-    <h3>[botão de voltar bunitinho]</h3>
+      <p>Algumas outras informações...</p>
+      
+      <div id="container"></div>
+
+      <div class="buttonContainer">
+        <div class="backButton" onclick="goBack()">
+          <svg xmlns="http://www.w3.org/2000/svg" class="goBackIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          <h3>Voltar</h1>
+        </div>
+      </div>
+    </main>
 
     <footer id="appFooter" class="dataAtualizacao">
       <h2>Atualizado em:</h2>

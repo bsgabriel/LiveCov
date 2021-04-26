@@ -24,21 +24,25 @@ footer * {
     color: #fff;
     font-size: 15px;
 }
+main {
+    display: flex;
+    flex-direction: column;
+}
 #chart{
     margin-left: -1rem;
+    padding-right: 1rem;
 }
 #logoText {
     display: inline;
     color: #9C232B;
 }
-.searchIcon {
-    width: 30px;
-    height: 30px;
+.totalContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    margin-right: 10px;
-
-    transition: filter 0.2s;
-    cursor: pointer;
+    margin-top: 10px;
+    padding: 0 10px;
 }
 .localizacaoContainer {
     display: flex;
@@ -48,8 +52,43 @@ footer * {
     
     align-items: center;
     justify-content: center;
-
 }
 .localizacaoContainer * {
     color: #fff;
+}
+.numerosConfirmados{
+    margin-left: 10px;
+    font-size: 20px;
+    margin-top: 21px; /*Gambiarra*/
+}
+.globalRankingTitle {
+    margin-left: 1rem;
+    margin-bottom: -1rem;
+}
+.buttonContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 15px 0;
+}
+.backButton {
+    height: 40px;
+    padding: 0 15px;
+    border-radius: 15px;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    background: #9C232B;
+    cursor: pointer;
+}
+.backButton h3 {
+    color: white;
+}
+.goBackIcon{
+    height: 24px;
+    width: 24px;
+    color: white;
+    margin-right: 10px;
 }
