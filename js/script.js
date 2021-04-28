@@ -155,4 +155,14 @@ function animaAnimaisNumeros()
   })
 }
 
+function goToGlobalData(){
+  window.AppInventor.setWebViewString(JSON.stringify({
+    action: 'goToScreen',               
+    goToScreen: 'GlobalData' 
+  })); 
+}
 
+function init(){
+  fetchApi("Brazil");
+  setTitle("Brasil");
+}

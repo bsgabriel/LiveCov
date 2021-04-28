@@ -32,6 +32,11 @@ async function getTopTenCountries(){
     .then((data) => {
         const parsedData = Object.entries(data);
 
+        const updated = parsedData[0][1].All.updated 
+            ? parsedData[0][1].All.updated 
+            : Object.entries(parsedData[0][1])[1][1].updated;
+        document.querySelector(".updated").innerHTML = new Date(updated).toLocaleDateString('pt-BR');
+
         parsedData.sort(([_a, a], [_b, b]) => {
             if(a.All.confirmed >= b.All.confirmed){
                 return 1;
@@ -143,8 +148,8 @@ async function initPage(){
 
 function goBack(){
   window.AppInventor.setWebViewString(JSON.stringify({
-    action: 'goBack',            
-    goToScreen: 'Home' 
+    action: 'goToScreen',            
+    goToScreen: 'Screen1' 
   }));  
 }
 
