@@ -28,13 +28,12 @@ main {
     display: flex;
     flex-direction: column;
 }
-#chart{
-    margin-left: -1rem;
-    padding-right: 1rem;
-}
 #logoText {
     display: inline;
     color: #9C232B;
+}
+.chart{
+    margin-left: -1rem;
 }
 .totalContainer {
     display: flex;
@@ -61,10 +60,36 @@ main {
     font-size: 20px;
     margin-top: 21px; /*Gambiarra*/
 }
+.titleContainer{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.titleIcon{
+    margin-top: 1.80rem;
+    width: 35px;
+    height: 35px;
+    color: #555;
+}
+.paddingDireita{
+    padding-right: 0.95rem;
+}
+.paddingEsquerda{
+    padding-left: 0.95rem;
+}
 .globalRankingTitle {
     margin-left: 1rem;
     margin-bottom: -1rem;
 }
+.rankingPerMillion{
+    margin-left: 1rem;
+    margin-bottom: -1rem;
+    margin: 2rem 1.5rem -1rem auto;
+    text-align: right
+}
+.apexcharts-tooltip * {
+    color: #f3f3f3;
+  }
 .buttonContainer {
     display: flex;
     justify-content: center;

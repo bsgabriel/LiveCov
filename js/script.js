@@ -16,7 +16,7 @@ function renderChart([actives, recovered, deaths]) {
           width: 250
         },
         legend: {
-          position: 'bottom'
+          position: 'bottom' 
         }
       }
     }]
