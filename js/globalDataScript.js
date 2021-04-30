@@ -1,17 +1,12 @@
-var totalGlobalCases = '-';
 var data;
 var NUMBER_OF_COUNTRIES_IN_GRAPH = 10;
 
 async function initPage() {
-  await renderTopChart();
-  document.querySelector(".totalContainer").innerHTML = `
-      <h2>Total de casos:</h2>
-      <p class="numerosConfirmados" data-numero>${totalGlobalCases}</p>
-  `;
+  renderTopChart();
   renderPerMillionChart();
 }
 
-async function getTranslatedCountries(countriesNames) {
+async function getTranslatedCountries(countriesNames) { // n ta funcionando (ainda)
   // let body = countriesNames.map(c => {return {Text:c}})
 
   console.log("body: ", JSON.stringify([{ Text: "I'm testing" }, { Text: "I'm testing" }, { Text: "I'm testing" }]));
@@ -43,10 +38,7 @@ async function getTopTenCountriesPerMillion() {
 
   const parsedData = Object.entries(data);
 
-  const updated = parsedData[0][1].All.updated
-    ? parsedData[0][1].All.updated
-    : Object.entries(parsedData[0][1])[1][1].updated;
-  document.querySelector(".updated").innerHTML = new Date(updated).toLocaleDateString('pt-BR');
+  setUpdatedAt(parsedData);
 
   const parsedPerMillion = parsedData.map(country => {
     const {confirmed, population} = country[1].All;
@@ -88,11 +80,8 @@ async function getTopTenCountries() {
 
   const parsedData = Object.entries(data);
 
-  const updated = parsedData[0][1].All.updated
-    ? parsedData[0][1].All.updated
-    : Object.entries(parsedData[0][1])[1][1].updated;
-  document.querySelector(".updated").innerHTML = new Date(updated).toLocaleDateString('pt-BR');
-
+  setUpdatedAt(parsedData);
+  
   parsedData.sort(([_a, a], [_b, b]) => {
     if (a.All.confirmed >= b.All.confirmed) {
       return 1;
@@ -105,7 +94,7 @@ async function getTopTenCountries() {
 
   parsedData.reverse();
 
-  totalGlobalCases = parsedData[0][1].All.confirmed.toLocaleString('pt-BR');
+  setTotalGlobalCases(parsedData[0][1].All.confirmed);
 
   parsedData.splice(0, 1); // Tirar os dados "Global"
   parsedData.splice(NUMBER_OF_COUNTRIES_IN_GRAPH, parsedData.length - NUMBER_OF_COUNTRIES_IN_GRAPH);
@@ -115,7 +104,7 @@ async function getTopTenCountries() {
 
 async function renderTopChart() {
   const topData = await getTopTenCountries();
-  const countriesNames = topData.map(country => country[0]);
+  // const countriesNames = topData.map(country => country[0]);
   // const translatedCountries = await getTranslatedCountries(countriesNames);
 
   const options = {
@@ -301,11 +290,22 @@ function animaNumeros() {
   })
 }
 
-function getRandomColor() {
-  var letters = '0123456789ABCDEF';
-  var color = '#';
-  for (var i = 0; i < 6; i++) {
-    color += letters[Math.floor(Math.random() * 16)];
-  }
-  return color;
+function setUpdatedAt(data) {
+  const updatedAtDiv = document.querySelector(".updated");
+  if (updatedAtDiv.innerText !== "-") return;
+
+  const updated = data[0][1].All.updated
+    ? data[0][1].All.updated
+    : Object.entries(data[0][1])[1][1].updated;
+
+  updatedAtDiv.innerHTML = new Date(updated).toLocaleDateString('pt-BR');
+}
+
+function setTotalGlobalCases(value){
+  document.querySelector(".totalContainer").innerHTML = `
+    <h2>Total de casos:</h2>
+    <p class="numerosConfirmados" data-numero>
+      ${value.toLocaleString('pt-BR')}
+    </p>
+  `;
 }
