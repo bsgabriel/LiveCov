@@ -62,7 +62,7 @@ function fetchApi(country)
     numerosMortes.innerText = deaths;
     numerosAtivos.innerText = ativos;
 
-    animaAnimaisNumeros();
+    animaNumeros();
 
     /*
       Se data.All.updated não for null ele vai usar aquele valor no front. 
@@ -135,7 +135,7 @@ function ajustFooter(){
 }
 
 // a funcao vai ser chamada cada vez que o fetch for feito 
-function animaAnimaisNumeros()
+function animaNumeros()
 {
   const numeros = document.querySelectorAll('[data-numero]'); // Seleciona tudo que tem a data-numero (no caso, os P's contendo os números). Por isso o RegEx veio pra cá
 

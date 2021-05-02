@@ -272,21 +272,22 @@ function goBack() {
   }));
 }
 
-function animaNumeros() {
+function animaNumeros()
+{
   const numeros = document.querySelectorAll('[data-numero]');
-
   numeros.forEach((numero) => {
     const total = +numero.innerText;
-    const incremento = Math.floor(total / 100);
+    const incremento = Math.floor(total / 100); // Valor relativo ao numero total (como eram numeros bem distintos, não faria sentido incrementar de um em um)
     let start = 0;
     const timer = setInterval(() => {
       start += incremento;
-      numero.innerText = start.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-      if (start > total) {
-        numero.innerText = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+      numero.innerText = start.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
+      if(start > total) // Caso o numero passe do total (numero da api), ele deixa o texto como o total, aplica o RegEx e limpa o timer
+      {
+        numero.innerText = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); 
         clearInterval(timer);
       }
-    }, 10 * Math.random())
+    }, 10 * Math.random()) // Esse math.random é só pra deixar mais 'orgânico'
   })
 }
 
@@ -302,10 +303,7 @@ function setUpdatedAt(data) {
 }
 
 function setTotalGlobalCases(value){
-  document.querySelector(".totalContainer").innerHTML = `
-    <h2>Total de casos:</h2>
-    <p class="numerosConfirmados" data-numero>
-      ${value.toLocaleString('pt-BR')}
-    </p>
-  `;
+  document.querySelector(".numerosConfirmados").innerText = value;
+  animaNumeros();
+  
 }
