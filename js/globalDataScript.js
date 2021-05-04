@@ -1,9 +1,11 @@
-var data;
+let casesData, deathsData;
 var NUMBER_OF_COUNTRIES_IN_GRAPH = 10;
 
 async function initPage() {
   renderTopChart();
   renderPerMillionChart();
+  renderTotalDeathChart();
+  renderTotalDeaths();
 }
 
 async function getTranslatedCountries(countriesNames) { // n ta funcionando (ainda)
@@ -31,12 +33,12 @@ async function getTranslatedCountries(countriesNames) { // n ta funcionando (ain
 }
 
 async function getTopTenCountriesPerMillion() {
-  if (!data) {
-    data = await fetch("https://covid-api.mmediagroup.fr/v1/cases")
+  if (!casesData) {
+    casesData = await fetch("https://covid-api.mmediagroup.fr/v1/cases")
       .then(res => res.json());
   }
 
-  const parsedData = Object.entries(data);
+  const parsedData = Object.entries(casesData);
 
   setUpdatedAt(parsedData);
 
@@ -73,12 +75,12 @@ async function getTopTenCountriesPerMillion() {
 }
 
 async function getTopTenCountries() {
-  if (!data) {
-    data = await fetch("https://covid-api.mmediagroup.fr/v1/cases")
+  if (!casesData) {
+    casesData = await fetch("https://covid-api.mmediagroup.fr/v1/cases")
       .then(res => res.json());
   }
 
-  const parsedData = Object.entries(data);
+  const parsedData = Object.entries(casesData);
 
   setUpdatedAt(parsedData);
   
@@ -104,8 +106,6 @@ async function getTopTenCountries() {
 
 async function renderTopChart() {
   const topData = await getTopTenCountries();
-  // const countriesNames = topData.map(country => country[0]);
-  // const translatedCountries = await getTranslatedCountries(countriesNames);
 
   const options = {
     series: [{
@@ -179,7 +179,9 @@ async function renderTopChart() {
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  const chartDiv = document.querySelector("#chart");
+  chartDiv.innerHTML = '';
+  const chart = new ApexCharts(chartDiv, options);
   chart.render();
 }
 
@@ -261,7 +263,9 @@ async function renderPerMillionChart(){
     }
   };
 
-  var chart = new ApexCharts(document.querySelector("#chartPerMillion"), options);
+  const chartDiv = document.querySelector("#chartPerMillion");
+  chartDiv.innerHTML = "";
+  const chart = new ApexCharts(chartDiv, options);
   chart.render();
 }
 
@@ -305,5 +309,89 @@ function setUpdatedAt(data) {
 function setTotalGlobalCases(value){
   document.querySelector(".numerosConfirmados").innerText = value;
   animaNumeros();
-  
+}
+
+async function renderTotalDeaths(){
+  if (!casesData) {
+    casesData = await fetch("https://covid-api.mmediagroup.fr/v1/cases")
+      .then(res => res.json());
+  }
+
+  document.getElementById("totalDeaths").innerText = casesData.Global.All.deaths.toLocaleString('pt-BR')
+}
+
+async function getHistoryData(){
+  const NUMBER_OF_DATES = 20;
+
+  if (!deathsData) {
+    deathsData = await fetch('https://covid-api.mmediagroup.fr/v1/history?status=Deaths&country=Global')
+    .then(res => res.json());
+  }
+
+  const allDates = Object.keys(deathsData.All.dates);
+
+  const lastNumberDays = allDates.splice(0, NUMBER_OF_DATES);
+
+  const lastNumberDaysData = lastNumberDays.map(day => deathsData.All.dates[day]);
+
+  return {
+    dates: lastNumberDays,
+    cases: lastNumberDaysData,
+  }
+}
+
+async function renderTotalDeathChart(){
+  const history = await getHistoryData();
+
+  const options = {
+    colors: ['#111'],
+    series: [{
+      data: history.cases,
+    }],
+    chart: {
+      type: 'area',
+      height: 350,
+      zoom: {
+        enabled: false
+      },
+      toolbar: {
+        show: false
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      curve: 'straight'
+    },
+    labels: history.dates,
+    xaxis: {
+      type: 'datetime',
+    },
+    yaxis: {
+      opposite: true
+    },
+    legend: {
+      horizontalAlign: 'left'
+    },
+    tooltip: {
+      theme: 'dark',
+      style: {
+        color: '#fff'
+      },
+      y: {
+        title: {
+          formatter: () => {
+            return ''
+          }
+        }
+      }
+    }
+  };
+
+
+  const chartDiv = document.querySelector("#totalDeathsChart");
+  chartDiv.innerHTML = "";
+  const chart = new ApexCharts(chartDiv, options);
+  chart.render();
 }

@@ -13,7 +13,7 @@
 <body onload="initPage()">
     <header>
       <div>
-        <h1 id="logoText">Live<h1 style="display: inline;">Cov.</h1></h1>
+        <h1 id="logoText">Live<h1 style="display: inline; color: #555">Cov.</h1></h1>
       </div>
     </header>
     
@@ -33,7 +33,9 @@
           <path fill="currentColor" d="M17.9,17.39C17.64,16.59 16.89,16 16,16H15V13A1,1 0 0,0 14,12H8V10H10A1,1 0 0,0 11,9V7H13A2,2 0 0,0 15,5V4.59C17.93,5.77 20,8.64 20,12C20,14.08 19.2,15.97 17.9,17.39M11,19.93C7.05,19.44 4,16.08 4,12C4,11.38 4.08,10.78 4.21,10.21L9,15V16A2,2 0 0,0 11,18M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2Z" />
         </svg>
       </div>
-      <div id="chart" class="chart"></div>
+      <div id="chart" class="chart">
+        <img class="chartLoading" src="./assets/alternativeCircularLoading.gif" alt="Carregando">
+      </div>
       
       <div class="titleContainer">
         <svg class="titleIcon paddingEsquerda" viewBox="0 0 24 24">
@@ -45,18 +47,41 @@
         </h2>
       </div>
       
-      <div id="chartPerMillion" class="chart"></div>
+      <div id="chartPerMillion" class="chart">
+        <img class="chartLoading" src="./assets/alternativeCircularLoading.gif" alt="Carregando">
+      </div>
       
       <div id="container"></div>
 
-      <p style="margin: 0 auto; margin-bottom: 10px">🚧 Página em construção :) 🚧</p>
+      <div class="deathsTitle">
+        <div class="deathsLine">
+          <div class="deathsTextContainer">
+            <h1>Mortes Globais</h1>
+          </div>
+        </div>
+      </div>
 
-      <div class="buttonContainer">
+      <div class="totalDeaths">
+        <h1>Total:</h1>
+        <div class="deathsHighlight">
+          <h3 id="totalDeaths"> - </h3>
+        </div>
+        <h2>Pessoas</h2>
+      </div>
+
+      <div id="totalDeathsChart" class="chart">
+        <img class="chartLoading" src="./assets/alternativeCircularLoading.gif" alt="Carregando">
+      </div>
+
+      <p style="margin: 10px auto;">🚧 Página em construção :) 🚧</p>
+      
+      <div class="buttonContainer">\
         <div class="backButton" onclick="goBack()">
           <svg xmlns="http://www.w3.org/2000/svg" class="goBackIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           <h3>Voltar</h1>
         </div>
       </div>
+
     </main>
 
     <footer id="appFooter" class="dataAtualizacao">

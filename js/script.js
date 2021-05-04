@@ -162,7 +162,7 @@ function goToGlobalData(){
   })); 
 }
 
-function init(){
+function init(){ // <- P R E G U I Ç A
   fetchApi("Brazil");
   setTitle("Brasil");
 }

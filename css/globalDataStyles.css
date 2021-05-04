@@ -5,7 +5,7 @@ body {
 }
 p, h1, h2, h3, h4, h5, h6, span, ul, li {
     font-family: helvetica, sans-serif;
-    color: #555;
+    color: #000;
 }
 header {
     padding: 10px 10px 10px 10px;
@@ -32,7 +32,17 @@ main {
     display: inline;
     color: #9C232B;
 }
-.chart{
+#totalDeathsChart {
+    margin-left: 1rem;
+}
+.chartLoading {
+    margin: 1rem 0;
+    width: 6rem;
+    height: 6rem;
+}
+.chart {
+    display: flex;
+    justify-content: center;
     margin-left: -1rem;
 }
 .totalContainer {
@@ -69,7 +79,7 @@ main {
     margin-top: 1.80rem;
     width: 35px;
     height: 35px;
-    color: #555;
+    color: #000;
 }
 .paddingDireita{
     padding-right: 0.95rem;
@@ -89,7 +99,7 @@ main {
 }
 .apexcharts-tooltip * {
     color: #f3f3f3;
-  }
+}
 .buttonContainer {
     display: flex;
     justify-content: center;
@@ -116,4 +126,48 @@ main {
     width: 24px;
     color: white;
     margin-right: 10px;
+}
+.deathsTitle {
+    display: flex;
+    height: 50px;
+    width: 100vw;
+    
+    flex-direction: column;
+    align-items: center;
+}
+.deathsLine {
+    width: 100%;
+    height: 25px;
+    display: flex;
+    border-bottom: 1px groove #ddd;
+    
+    align-items: center;
+    justify-content: center;
+}
+.deathsTextContainer {
+    background-color: white;
+    padding: 0 2rem;
+    display: flex;
+    height: 50px;
+    margin-bottom: -25px;
+    justify-content: center;
+    align-items: center;
+}
+.deathsHighlight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.75rem;
+    padding: 0rem 1rem;
+    background-color: black;
+    border-radius: 1rem;
+}
+.deathsHighlight * {
+    color: white
+}
+.totalDeaths {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 1rem;
 }
