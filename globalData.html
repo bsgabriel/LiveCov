@@ -96,21 +96,36 @@
         <img class="chartLoading" src="./assets/alternativeCircularLoading.gif" alt="Carregando">
       </div>
 
-      <div class="deathsTitle">
-        <div class="deathsLine" style="border-color: #3BBCC0;">
+      <div class="deathsTitle" style="margin-bottom:1.75rem">
+        <div class="deathsLine" style="border-color: #3BBCC0">
           <div class="deathsTextContainer">
-            <h1 style="color: #3BBCC0">Vacina</h1>
+            <h1 style="color: #3BBCC0; font-weight: 700;">Vacinação</h1>
+            <svg class="syringeIcon" viewBox="0 0 24 24">
+              <path fill="currentColor" d="M11.15,15.18L9.73,13.77L11.15,12.35L12.56,13.77L13.97,12.35L12.56,10.94L13.97,9.53L15.39,10.94L16.8,9.53L13.97,6.7L6.9,13.77L9.73,16.6L11.15,15.18M3.08,19L6.2,15.89L4.08,13.77L13.97,3.87L16.1,6L17.5,4.58L16.1,3.16L17.5,1.75L21.75,6L20.34,7.4L18.92,6L17.5,7.4L19.63,9.53L9.73,19.42L7.61,17.3L3.08,21.84V19Z" />
+            </svg>
           </div>
         </div>
       </div>
 
-      <div class="percentualVacinated">
-        <h1 class="percentualVacinatedTitle">Imunização:</h1>
-        <h1 style="color: #3BBCC0; margin-right: 1rem;" id="vaccinesPercentual">0%</h1>
+      <div class="vaccinesContainer">
+        <div class="percentualVacinated">
+          <h2>Imunização:</h2>
+          <h1 id="vaccinesPercentual">0%</h1>
+        </div>
+
       </div>
 
-      <p style="margin: 10px auto;">🚧 Página em construção :) 🚧</p>
-      
+      <div class="vaccinesInfo">
+          <h3>Pessoas totalmente imunizadas:</h3>
+          <div class="vaccinesHighlight">
+            <span id="totallyImunizatedText">2.000.000</span>
+        </div>
+          <h3>Pessoas parcialmente imunizadas:</h3>
+          <div class="vaccinesHighlight">
+            <span id="partiallyImunizatedText">2.000.000</span>
+        </div>
+      </div>
+
       <div class="buttonContainer">
         <div class="backButton" onclick="goBack()">
           <svg xmlns="http://www.w3.org/2000/svg" class="goBackIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>

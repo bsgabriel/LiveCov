@@ -35,6 +35,11 @@ main {
 #totalDeathsChart {
     margin-left: 1rem;
 }
+.lineDiv {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 .chartLoading {
     margin: 1rem 0;
     width: 6rem;
@@ -105,6 +110,7 @@ main {
     justify-content: center;
     align-items: center;
     padding: 15px 0;
+    margin-top: 2rem;
 }
 .backButton {
     height: 40px;
@@ -203,12 +209,53 @@ main {
     height: 35px;
     color: #000;
 }
-.percentualVacinatedTitle {
-    font-weight: 500; 
+.vaccinesContainer {
+    display: flex;
+    flex-direction: column;
+    background-color: #3BBCC0;
+    margin: 0 1rem;
     padding: 0 1rem;
+    border-radius: 1.5rem;
+}
+.vaccinesContainer *{
+    color: white;
 }
 .percentualVacinated{
     display: flex;
-    flex-direction: row;
     justify-content: space-between;
+    align-items: center;
+    flex-direction: row;
+}
+.vaccinesInfo {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.vaccinesInfo h3 {
+    color: #35a5a9
+}
+.vaccinesInfo * {
+    padding: 0 .75rem;
+}
+.syringeIcon{
+    width: 2rem;
+    height: 2rem;
+    margin-left: 0.5rem;
+    color: #3BBCC0;
+}
+.vaccinesHighlight {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 2.75rem;
+    padding: 0rem 1rem;
+    background-color: #3BBCC0;
+    border-radius: 1rem;
+    width: 6rem;
+    margin-bottom: 1.5rem;
+}
+.vaccinesHighlight * {
+    color: white;
 }

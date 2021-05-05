@@ -547,7 +547,9 @@ async function renderTotalVaccines(){
     .then(res => res.json());
   }
 
-  const {population, people_vaccinated} = vaccinesData.All;
+  const {population, people_vaccinated, people_partially_vaccinated} = vaccinesData.All;
 
   document.getElementById("vaccinesPercentual").innerText = `${(people_vaccinated * 100 / population).toFixed(1)}%`;
+  document.getElementById("totallyImunizatedText").innerText = people_vaccinated.toLocaleString('pt-BR');
+  document.getElementById("partiallyImunizatedText").innerText = (people_partially_vaccinated - people_vaccinated).toLocaleString('pt-BR');
 }
