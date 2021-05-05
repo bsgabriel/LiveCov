@@ -1,11 +1,14 @@
-let casesData, deathsData;
-var NUMBER_OF_COUNTRIES_IN_GRAPH = 10;
+let casesData, deathsData, vaccinesData;
+const NUMBER_OF_COUNTRIES_IN_GRAPH = 10;
+const NUMBER_OF_DATES = 20;
 
 async function initPage() {
   renderTopChart();
   renderPerMillionChart();
   renderTotalDeathChart();
   renderTotalDeaths();
+  renderDeathsPerMillionChart();
+  renderTotalVaccines();
 }
 
 async function getTranslatedCountries(countriesNames) { // n ta funcionando (ainda)
@@ -44,7 +47,7 @@ async function getTopTenCountriesPerMillion() {
 
   const parsedPerMillion = parsedData.map(country => {
     const {confirmed, population} = country[1].All;
-    if(!confirmed || !population){
+    if(!confirmed || !population || country[0] == 'Global'){
       return [
         ...country,
         0
@@ -68,7 +71,6 @@ async function getTopTenCountriesPerMillion() {
   });
 
   parsedPerMillion.reverse();
-  parsedPerMillion.splice(0, 1); // Tirar os dados "Global"
   parsedPerMillion.splice(NUMBER_OF_COUNTRIES_IN_GRAPH, parsedPerMillion.length - NUMBER_OF_COUNTRIES_IN_GRAPH);
 
   return parsedPerMillion;
@@ -321,8 +323,6 @@ async function renderTotalDeaths(){
 }
 
 async function getHistoryData(){
-  const NUMBER_OF_DATES = 20;
-
   if (!deathsData) {
     deathsData = await fetch('https://covid-api.mmediagroup.fr/v1/history?status=Deaths&country=Global')
     .then(res => res.json());
@@ -342,6 +342,9 @@ async function getHistoryData(){
 
 async function renderTotalDeathChart(){
   const history = await getHistoryData();
+
+  document.getElementById("date1").innerText = new Date(history.dates[NUMBER_OF_DATES - 1]).toLocaleDateString('pt-BR');
+  document.getElementById("date2").innerText = new Date(history.dates[0]).toLocaleDateString('pt-BR');
 
   const options = {
     colors: ['#111'],
@@ -394,4 +397,157 @@ async function renderTotalDeathChart(){
   chartDiv.innerHTML = "";
   const chart = new ApexCharts(chartDiv, options);
   chart.render();
+}
+
+async function getDeathsPerMillionData(){
+  const NUMBER_OF_COUNTRIES_IN_GRAPH = 5;
+
+  if (!casesData) {
+    casesData = await fetch("https://covid-api.mmediagroup.fr/v1/cases")
+      .then(res => res.json());
+  }
+
+  const parsedData = Object.entries(casesData);
+
+  const parsedPerMillion = parsedData.map(country => {
+    const {deaths, population} = country[1].All;
+    if(!deaths || !population){
+      return [
+        ...country,
+        0
+      ]
+    }
+
+    return [
+      ...country,
+      deaths * 1000000 / population
+    ];
+  });
+
+  parsedPerMillion.sort(([_a, __a, a], [_b, __b, b]) => {
+    if (a >= b) {
+      return 1;
+    } else if (a < b) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
+
+  parsedPerMillion.reverse();
+  parsedPerMillion.splice(NUMBER_OF_COUNTRIES_IN_GRAPH, parsedPerMillion.length - NUMBER_OF_COUNTRIES_IN_GRAPH);
+
+  return parsedPerMillion;
+}
+
+async function renderDeathsPerMillionChart(){
+  const topData = await getDeathsPerMillionData();
+  
+  const options = {
+    colors: ['#000'],
+    series: [{
+      data: topData.map(country => country[2].toFixed(2)),
+    }],
+    chart: {
+      height: 350,
+      type: 'bar',
+      toolbar: {
+        show: false
+      }
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
+        columnWidth: '50%',
+      }
+    },
+    dataLabels: {
+      enabled: false
+    },
+    stroke: {
+      width: 2
+    },
+    
+    grid: {
+      row: {
+        colors: ['#fff', '#f2f2f2']
+      }
+    },
+    xaxis: {
+      labels: {
+        rotate: -45
+      },
+      categories: topData.map(country => country[0]),
+      tickPlacement: 'on'
+    },
+    plotOptions: {
+      bar: {
+        borderRadius: 10,
+        dataLabels: {
+          position: 'top', // top, center, bottom
+        },
+      }
+    },
+    dataLabels: {
+      enabled: true,
+      formatter: function (val) {
+        return val;
+      },
+      offsetY: -20,
+      style: {
+        fontSize: '12px',
+        colors: ["#304758"]
+      }
+    },
+    yaxis: {
+      labels: {
+        show: false,
+        formatter: function (val) {
+          return val;
+        }
+      }
+    },
+    fill: {
+      type: 'gradient',
+      gradient: {
+        shade: 'light',
+        type: "horizontal",
+        shadeIntensity: 0.25,
+        gradientToColors: undefined,
+        inverseColors: true,
+        opacityFrom: 0.85,
+        opacityTo: 0.85,
+        stops: [50, 0, 100]
+      },
+    },
+    tooltip: {
+      theme: 'dark',
+      style: {
+        color: '#fff'
+      },
+      y: {
+        title: {
+          formatter: () => {
+            return ''
+          }
+        }
+      }
+    }
+  };
+
+  const chartDiv = document.querySelector("#deathsPerMillionTitle");
+  chartDiv.innerHTML = "";
+  const chart = new ApexCharts(chartDiv, options);
+  chart.render();
+}
+
+async function renderTotalVaccines(){
+  if (!vaccinesData) {
+    vaccinesData = await fetch("https://covid-api.mmediagroup.fr/v1/vaccines?country=Global")
+    .then(res => res.json());
+  }
+
+  const {population, people_vaccinated} = vaccinesData.All;
+
+  document.getElementById("vaccinesPercentual").innerText = `${(people_vaccinated * 100 / population).toFixed(1)}%`;
 }

@@ -69,13 +69,49 @@
         <h2>Pessoas</h2>
       </div>
 
+      <div class="deathsNumberTitle">
+        <h2>Números de mortes entre:</h2>
+        <div class="datesContainer">
+          <h4 id="date1"></h4>
+          <h4 style="margin: 0 1rem"> - </h4>
+          <h4 id="date2"></h4>
+        </div>
+      </div>
+
       <div id="totalDeathsChart" class="chart">
         <img class="chartLoading" src="./assets/alternativeCircularLoading.gif" alt="Carregando">
       </div>
 
+      <div class="deathsPerMillionContainer">
+        <svg class="deathsPerMillionIcon"" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M10.5,2H13.5V8H19V11H13.5V22H10.5V11H5V8H10.5V2Z" />
+       </svg>
+        <h2 class="deathsPerMillionTitle">
+          Número de mortes <br/> 
+          (por milhão de habitantes)
+        </h2>
+      </div>
+
+      <div id="deathsPerMillionTitle" class="chart">
+        <img class="chartLoading" src="./assets/alternativeCircularLoading.gif" alt="Carregando">
+      </div>
+
+      <div class="deathsTitle">
+        <div class="deathsLine" style="border-color: #3BBCC0;">
+          <div class="deathsTextContainer">
+            <h1 style="color: #3BBCC0">Vacina</h1>
+          </div>
+        </div>
+      </div>
+
+      <div class="percentualVacinated">
+        <h1 class="percentualVacinatedTitle">Imunização:</h1>
+        <h1 style="color: #3BBCC0; margin-right: 1rem;" id="vaccinesPercentual">0%</h1>
+      </div>
+
       <p style="margin: 10px auto;">🚧 Página em construção :) 🚧</p>
       
-      <div class="buttonContainer">\
+      <div class="buttonContainer">
         <div class="backButton" onclick="goBack()">
           <svg xmlns="http://www.w3.org/2000/svg" class="goBackIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
           <h3>Voltar</h1>
