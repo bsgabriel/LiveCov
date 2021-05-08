@@ -31,8 +31,7 @@ function setTitle(title){
   document.querySelector('.localizacaoContainer').innerHTML = `<h1>${title}</h1>`
 }
 
-function fetchApi(country)
-{
+async function fetchApi(country) {
   document.querySelector(".bandeira").innerHTML = `
   <div class="carregandoContainer">
     <img class="carregandoImagem" src="/assets/circularLoadingPrimary.gif" alt="Carregando" />
@@ -48,6 +47,14 @@ function fetchApi(country)
     return response.json();
   })
   .then((data) => {
+    // Se n tem "All" quer dizer que o usuário digitou algo nada a ver que n é um país
+    if (!Object.keys(data).includes("All")){
+      alert("País não encontrado");
+      fetchApi("Brazil");
+      setTitle("Brasil");
+      return;
+    }
+
     const {confirmed, recovered, deaths, population} = data.All;
 
     const numerosConfirmados = document.querySelector('.numerosConfirmados');
@@ -120,6 +127,7 @@ function fetchApi(country)
 
     ajustFooter();
     renderChart([ativos, recovered, deaths]);
+    renderVaccinesChart(country);
   });
 }
 
@@ -165,4 +173,60 @@ function goToGlobalData(){
 function init(){ // <- P R E G U I Ç A
   fetchApi("Brazil");
   setTitle("Brasil");
+}
+
+async function getVaccinesInfo(country){
+  const data = await fetch(`https://covid-api.mmediagroup.fr/v1/vaccines?country=${country}`)
+  .then(res => res.json())
+  .then(data => {
+    const { population, people_vaccinated, people_partially_vaccinated } = data.All;
+
+
+    return {
+      population,
+      people_vaccinated,
+      people_partially_vaccinated
+    }
+  });
+
+  return data;
+}
+
+async function renderVaccinesChart(country){
+  const { 
+    population, 
+    people_vaccinated, 
+    people_partially_vaccinated 
+  } = await getVaccinesInfo(country);
+
+  document.getElementById("percentaual").innerText = `${(people_vaccinated * 100 / population).toFixed(1)}%`
+  document.getElementById("totalVaccines").innerText = people_vaccinated.toLocaleString("pt-BR");
+  document.getElementById("totalPartiallyVaccines").innerText = people_partially_vaccinated.toLocaleString("pt-BR");
+
+  const options = {
+    series: [population, people_vaccinated],
+    chart: {
+      type: 'donut',
+    },
+    dataLabels: {
+      enabled: false
+    },
+    colors: ['#9C232B', '#3BBCC0'],
+    responsive: [{
+      breakpoint: 480,
+      options: {
+        chart: {
+          width: 200
+        },
+        legend: {
+          show: false,
+        }
+      }
+    }]
+  };
+
+  const chartDiv = document.querySelector("#vaccinesChart");
+  chartDiv.innerHTML = '';
+  const chart = new ApexCharts(chartDiv, options);
+  chart.render();
 }

@@ -13,10 +13,6 @@ header {
     justify-content: space-between;
 }
 footer {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
     background-color: #9C232B;
     display: flex;
     align-items: center;
@@ -179,4 +175,50 @@ footer * {
     width: 24px;
     color: white;
     margin-left: 5px;
+}
+.vaccinesContainer {
+    display: flex;
+    padding: 0 1rem;
+}
+.vaccinesPercentual {
+    display: flex;
+    width: 100vw;
+    justify-content: space-between;
+}
+.percentualTitle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.percentualTitle h1 {
+    margin-bottom: -0.5rem;
+}
+.percentualTitle h2 {
+    color: #3bbcc0;
+}
+.vaccinesPrimary {
+    display: flex;
+    justify-content: space-between;
+    background-color: #4fd2d6;
+    margin: 0.5rem 1rem;
+    margin-top: 2rem;
+}
+.vaccinesPrimary * {
+    color: white;
+}
+.vaccinesSecondary {
+    background-color: #39a7ab;
+    margin: 0.5rem 1rem;
+}
+.vaccinesSecondary * {
+    color: white;
+}
+#vaccinesChart {
+    display: flex;
+    flex: 1;
+    align-items: center;
+    justify-content: center;
+}
+#totalPartiallyVaccines, #totalVaccines {
+    margin-left: 1rem;
 }
