@@ -28,6 +28,9 @@ footer * {
     display: inline;
     color: #9C232B;
 }
+#totalPartiallyVaccines, #totalVaccines {
+    margin-left: 1rem;
+}
 .searchIcon {
     width: 30px;
     height: 30px;
@@ -213,12 +216,13 @@ footer * {
 .vaccinesSecondary * {
     color: white;
 }
+/* .vaccinesChartDelimiter{
+    width: 18rem;
+    height: 18rem;
+} */
 #vaccinesChart {
     display: flex;
     flex: 1;
     align-items: center;
     justify-content: center;
-}
-#totalPartiallyVaccines, #totalVaccines {
-    margin-left: 1rem;
 }

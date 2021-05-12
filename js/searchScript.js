@@ -15,9 +15,11 @@ function search(data){
 
   if (value === '') return; // Se deu true aqui, o usuário n clicou em nenhum botão e n digitou nada, então n é pra fazer nada
 
+  const parsedValue = value.charAt(0).toUpperCase() + value.slice(1);
+
   window.AppInventor.setWebViewString(JSON.stringify({
     action: 'search',   
-    value,              
+    value: parsedValue,              
     goToScreen: 'Screen1',
   }));  
 }

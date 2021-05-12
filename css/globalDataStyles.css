@@ -234,6 +234,7 @@ main {
     align-items: center;
 }
 .vaccinesInfo h3 {
+    font-size: 1.25rem;
     color: #35a5a9
 }
 .vaccinesInfo * {

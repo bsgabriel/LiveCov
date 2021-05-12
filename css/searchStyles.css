@@ -96,3 +96,11 @@ section {
   background-color: '#f0f'; 
   overflow: hidden;
 }
+.searchButton {
+  cursor: pointer;
+  
+  transition: filter 0.2s;
+}
+.searchButton:hover {
+  filter: opacity(0.5);
+}

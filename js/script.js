@@ -170,10 +170,10 @@ function goToGlobalData(){
   })); 
 }
 
-function init(){ 
-  if(window.AppInventor == undefined){
-    setTitle("Brasil");
+function init(){
+  if(window.AppInventor === undefined){
     fetchApi("Brazil");
+    setTitle("Brasil");
   }
 }
 
@@ -209,26 +209,20 @@ async function renderVaccinesChart(country){
     series: [population, people_vaccinated],
     chart: {
       type: 'donut',
+      height: 175,
+      height: 175,
     },
     dataLabels: {
       enabled: false
     },
     colors: ['#9C232B', '#3BBCC0'],
-    responsive: [{
-      breakpoint: 480,
-      options: {
-        chart: {
-          width: 200
-        },
-        legend: {
-          show: false,
-        }
-      }
-    }]
+    legend: {
+      show: false
+    }
   };
 
   const chartDiv = document.querySelector("#vaccinesChart");
-  chartDiv.innerHTML = '';
-  const chart = new ApexCharts(chartDiv, options);
+  chartDiv.innerHTML = "<div class='vaccinesChartDelimiter'></div>";
+  const chart = new ApexCharts(document.querySelector(".vaccinesChartDelimiter"), options);
   chart.render();
 }
