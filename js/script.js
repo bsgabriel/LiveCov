@@ -172,8 +172,8 @@ function goToGlobalData(){
 
 function init(){ 
   if(window.AppInventor == undefined){
-    setTitle("Brasil");
-    fetchApi("Brazil");
+    setTitle("Japão");
+    fetchApi("Japan");
   }
 }
 
