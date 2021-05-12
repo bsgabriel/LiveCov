@@ -173,7 +173,7 @@ function goToGlobalData(){
 function init(){ 
   if(window.AppInventor == undefined){
     setTitle("Brasil");
-    fetchApi("brazil");
+    fetchApi("Brazil");
   }
 }
 
