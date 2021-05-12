@@ -170,9 +170,11 @@ function goToGlobalData(){
   })); 
 }
 
-function init(){ // <- P R E G U I Ç A
-  fetchApi("Brazil");
-  setTitle("Brasil");
+function init(){ 
+  if(window.AppInventor == undefined){
+    setTitle("Brasil");
+    fetchApi("Brazil");
+  }
 }
 
 async function getVaccinesInfo(country){
