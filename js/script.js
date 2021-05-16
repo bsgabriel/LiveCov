@@ -120,7 +120,7 @@ async function fetchApi(country) {
       <div class="bandeiraText">
         <h1>Situação:</h1>
         <h3 class="vermelho">Bandeira Vermelha</h3>
-        <p>Não saia de casa pois os índices de contágio na sua região estão muito altos. Preze por sua saúde e principalmente as dos outros.</p>
+        <p>Não saia de casa pois os índices de contágio na sua região estão muito altos. Preze por sua saúde e a dos outros.</p>
       </div>
       `
     } else if (indiceBandeira <= 0.5 && indiceBandeira > 0.23){
