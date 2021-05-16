@@ -48,10 +48,8 @@ function goBack(){
   }));  
 }
 
-if(window.AppInventor !== undefined){
-  document.getElementById("txtSearch").addEventListener("keyup", (event) => {
-    if (event.code === "Enter"){
-      document.getElementById("txtSearch").blur();
-    }
-  });
-}
+document.getElementById("txtSearch").addEventListener("keyup", (event) => {
+  if (event.code === "Enter"){
+    document.getElementById("txtSearch").blur();
+  }
+});
