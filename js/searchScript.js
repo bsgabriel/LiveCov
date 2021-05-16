@@ -47,3 +47,11 @@ function goBack(){
     goToScreen: 'Screen1' 
   }));  
 }
+
+if(window.AppInventor !== undefined){
+  document.getElementById("txtSearch").addEventListener("keyup", (event) => {
+    if (event.code === "Enter"){
+      document.getElementById("txtSearch").blur();
+    }
+  });
+}
