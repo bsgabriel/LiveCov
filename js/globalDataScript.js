@@ -114,6 +114,9 @@ async function renderTopChart() {
       data: topData.map(country => country[1].All.confirmed),
     }],
     chart: {
+      animations: {
+        enabled: window.AppInventor === undefined ? true : false,
+      },
       type: 'bar',
       height: 380,
       toolbar: {
@@ -197,6 +200,9 @@ async function renderPerMillionChart(){
       data: topData.map(country => country[2].toFixed(2)),
     }],
     chart: {
+      animations: {
+        enabled: window.AppInventor === undefined ? true : false,
+      },
       type: 'bar',
       height: 380,
       toolbar: {
@@ -352,6 +358,9 @@ async function renderTotalDeathChart(){
       data: history.cases,
     }],
     chart: {
+      animations: {
+        enabled: window.AppInventor === undefined ? true : false,
+      },
       type: 'area',
       height: 350,
       zoom: {
@@ -449,6 +458,9 @@ async function renderDeathsPerMillionChart(){
       data: topData.map(country => country[2].toFixed(2)),
     }],
     chart: {
+      animations: {
+        enabled: window.AppInventor === undefined ? true : false,
+      },
       height: 350,
       type: 'bar',
       toolbar: {
