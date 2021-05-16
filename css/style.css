@@ -216,13 +216,74 @@ footer * {
 .vaccinesSecondary * {
     color: white;
 }
-/* .vaccinesChartDelimiter{
-    width: 18rem;
-    height: 18rem;
-} */
 #vaccinesChart {
     display: flex;
     flex: 1;
     align-items: center;
     justify-content: center;
+}
+.alertContainer{
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.25);
+    
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 1.3rem;
+
+    display: none;
+    opacity: 0;
+    transition: opacity 0.5s;
+}
+.alertContent{
+    margin-right: 2.6rem;
+    padding: 0.8rem 1.2rem;
+    border-radius: 1rem;
+    background-color: #fff;
+}
+.alertTitle{
+    align-self: flex-start;
+}
+.alertFooter{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.alertButton {
+    cursor: pointer;
+    border: 0;
+    padding: 0.5rem 1rem;
+    border-radius: 0.75rem;
+    background: #9C232B;
+    color: white;
+    font-weight: bold;
+    font-size: 1rem;
+}
+.alertButtonContainer{
+    display: flex;
+    justify-content: flex-end;
+}
+.alertSorryContainer{
+    display: flex;
+    justify-content: center;
+}
+.alertSorry{
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.noDataChartContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+}
+.noDataChartContainer span{
+    font-size: 25px;
 }

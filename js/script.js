@@ -1,4 +1,23 @@
-function renderChart([actives, recovered, deaths]) {
+function renderChart([actives, recovered, deaths], shouldChartRender) {
+  if(!shouldChartRender){
+    document.querySelector(".chartContainer").innerHTML = `
+      <div class="noDataChartContainer">
+        <svg style="color: #555;width:35px;height:35px; margin: 0 1rem 0 0; padding: 0;" viewBox="0 0 24 24">
+          <path fill="currentColor" d="M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M15.5,8C16.3,8 17,8.7 17,9.5C17,10.3 16.3,11 15.5,11C14.7,11 14,10.3 14,9.5C14,8.7 14.7,8 15.5,8M10,9.5C10,10.3 9.3,11 8.5,11C7.7,11 7,10.3 7,9.5C7,8.7 7.7,8 8.5,8C9.3,8 10,8.7 10,9.5M12,14C13.75,14 15.29,14.72 16.19,15.81L14.77,17.23C14.32,16.5 13.25,16 12,16C10.75,16 9.68,16.5 9.23,17.23L7.81,15.81C8.71,14.72 10.25,14 12,14Z" />
+        </svg>
+        <span>Dados indisponíveis</span>
+        <span>para a contrução de gráfico!</span>
+      </div>
+      <div id="chart"></div>
+    `;
+
+    return;
+  }
+
+  document.querySelector(".chartContainer").innerHTML = `
+    <div id="chart"></div>
+  `;
+  
   const options = {
     series: [recovered, deaths, actives],
     chart: {
@@ -23,7 +42,7 @@ function renderChart([actives, recovered, deaths]) {
   };
 
   document.querySelector("#chart").innerHTML = '';
-  var chart = new ApexCharts(document.querySelector("#chart"), options);
+  const chart = new ApexCharts(document.querySelector("#chart"), options);
   chart.render();
 }
 
@@ -33,14 +52,16 @@ function setTitle(title){
 
 async function fetchApi(country) {
   document.querySelector(".bandeira").innerHTML = `
-  <div class="carregandoContainer">
-    <img class="carregandoImagem" src="/assets/circularLoadingPrimary.gif" alt="Carregando" />
-  </div>
-  <div class="bandeiraText">
-    <h1>Situação:</h1>
-    <h4>---</h4>
-  </div>
+    <div class="carregandoContainer">
+      <img class="carregandoImagem" src="/assets/circularLoadingPrimary.gif" alt="Carregando" />
+    </div>
+    <div class="bandeiraText">
+      <h1>Situação:</h1>
+      <h4>---</h4>
+    </div>
   `;
+
+  let isThereAllData = false;
 
   fetch(`https://covid-api.mmediagroup.fr/v1/cases?country=${country}`)
   .then((response) => {
@@ -63,11 +84,16 @@ async function fetchApi(country) {
     const numerosAtivos = document.querySelector('.numerosAtivos');
 
     const ativos = confirmed - deaths - recovered;
+    isThereAllData = !!(confirmed && deaths && recovered)
 
-    numerosConfirmados.innerText = confirmed;
-    numerosRecuperados.innerText = recovered;
-    numerosMortes.innerText = deaths;
-    numerosAtivos.innerText = ativos;
+    numerosConfirmados.innerText = confirmed ? confirmed : '-';
+    numerosRecuperados.innerText = recovered ? recovered : '-';
+    numerosMortes.innerText = deaths ? deaths : '-';
+    numerosAtivos.innerText = isThereAllData ? ativos : '-';
+
+    if(!isThereAllData){
+      showNoDataAlert();
+    }
 
     animaNumeros();
 
@@ -125,8 +151,12 @@ async function fetchApi(country) {
       `
     }
 
+    if(country === 'France'){
+      showNoDataAlert();
+    }
+
     ajustFooter();
-    renderChart([ativos, recovered, deaths]);
+    renderChart([ativos, recovered, deaths], isThereAllData);
     renderVaccinesChart(country);
   });
 }
@@ -142,12 +172,15 @@ function ajustFooter(){
   document.getElementById("appFooter").style.position = 'relative';
 }
 
-// a funcao vai ser chamada cada vez que o fetch for feito 
+// A funcao vai ser chamada cada vez que o fetch for feito 
 function animaNumeros()
 {
   const numeros = document.querySelectorAll('[data-numero]'); // Seleciona tudo que tem a data-numero (no caso, os P's contendo os números). Por isso o RegEx veio pra cá
 
+  
   numeros.forEach((numero) => {
+    if(isNaN(numero.innerText) && isNaN(parseFloat(numero.innerText))) return; // Se não é um número não faz nada
+
     const total = +numero.innerText;
     const incremento = Math.floor(total / 100); // Valor relativo ao numero total (como eram numeros bem distintos, não faria sentido incrementar de um em um)
     let start = 0;
@@ -183,11 +216,17 @@ async function getVaccinesInfo(country){
   .then(data => {
     const { population, people_vaccinated, people_partially_vaccinated } = data.All;
 
+    const isThereAllData = !!(population && people_vaccinated && people_partially_vaccinated)
+
+    if(!isThereAllData){
+      showNoDataAlert();
+    }
 
     return {
       population,
       people_vaccinated,
-      people_partially_vaccinated
+      people_partially_vaccinated,
+      isThereAllData
     }
   });
 
@@ -198,12 +237,37 @@ async function renderVaccinesChart(country){
   const { 
     population, 
     people_vaccinated, 
-    people_partially_vaccinated 
+    people_partially_vaccinated,
+    isThereAllData: shouldChartRender
   } = await getVaccinesInfo(country);
 
-  document.getElementById("percentaual").innerText = `${(people_vaccinated * 100 / population).toFixed(1)}%`
-  document.getElementById("totalVaccines").innerText = people_vaccinated.toLocaleString("pt-BR");
-  document.getElementById("totalPartiallyVaccines").innerText = people_partially_vaccinated.toLocaleString("pt-BR");
+  document.getElementById("percentaual").innerText = 
+    !!(people_vaccinated && population) 
+      ? `${(people_vaccinated * 100 / population).toFixed(1)}%`
+      : '-';
+
+  document.getElementById("totalVaccines").innerText = 
+    people_vaccinated
+      ? people_vaccinated.toLocaleString("pt-BR")
+      : '0';
+
+  document.getElementById("totalPartiallyVaccines").innerText = 
+    people_partially_vaccinated
+      ? people_partially_vaccinated.toLocaleString("pt-BR")
+      : '0';
+
+  if(!shouldChartRender){
+    document.querySelector("#vaccinesChart").innerHTML = `
+      <div class="noDataChartContainer" style="text-align: center;">
+        <svg style="color: #555;width:24px;height:24px; margin: 0 1rem 0 0; padding: 0;" viewBox="0 0 24 24">
+            <path fill="currentColor" d="M20,12A8,8 0 0,0 12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12M22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2A10,10 0 0,1 22,12M15.5,8C16.3,8 17,8.7 17,9.5C17,10.3 16.3,11 15.5,11C14.7,11 14,10.3 14,9.5C14,8.7 14.7,8 15.5,8M10,9.5C10,10.3 9.3,11 8.5,11C7.7,11 7,10.3 7,9.5C7,8.7 7.7,8 8.5,8C9.3,8 10,8.7 10,9.5M12,14C13.75,14 15.29,14.72 16.19,15.81L14.77,17.23C14.32,16.5 13.25,16 12,16C10.75,16 9.68,16.5 9.23,17.23L7.81,15.81C8.71,14.72 10.25,14 12,14Z" />
+        </svg>
+        <span style="font-size: 1rem">Dados indisponíveis para a contrução de gráfico!</span>
+      </div>
+    `;
+
+    return;
+  }
 
   const options = {
     series: [population, people_vaccinated],
@@ -225,4 +289,22 @@ async function renderVaccinesChart(country){
   chartDiv.innerHTML = "<div class='vaccinesChartDelimiter'></div>";
   const chart = new ApexCharts(document.querySelector(".vaccinesChartDelimiter"), options);
   chart.render();
+}
+
+async function showNoDataAlert(){
+  const alertContainer = document.querySelector(".alertContainer");
+  alertContainer.style.display = 'flex';
+  
+  setTimeout(() => {
+      alertContainer.style.opacity = 1;
+  }, 100);
+}
+
+function hideNoDataAlert(){
+  const alertContainer = document.querySelector(".alertContainer");
+  alertContainer.style.opacity = 0;
+
+  setTimeout(() => {
+    alertContainer.style.display = 'none';
+}, 301);
 }
