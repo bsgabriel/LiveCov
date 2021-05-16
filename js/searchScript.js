@@ -49,7 +49,9 @@ function goBack(){
 }
 
 document.getElementById("txtSearch").addEventListener("keyup", (event) => {
-  if (event.code === "Enter"){
-    document.getElementById("txtSearch").blur();
+  console.log("e: ",event.key);
+  if (event.key === "Enter"){
+    console.log("disaniodsanio1;");
+    search();
   }
 });
