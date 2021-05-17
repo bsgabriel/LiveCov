@@ -1,3 +1,5 @@
+let alertShowed = false;
+
 function renderChart([actives, recovered, deaths], shouldChartRender) {
   if(!shouldChartRender){
     document.querySelector(".chartContainer").innerHTML = `
@@ -51,6 +53,8 @@ function setTitle(title){
 }
 
 async function fetchApi(country) {
+  alertShowed = false;
+
   document.querySelector(".bandeira").innerHTML = `
     <div class="carregandoContainer">
       <img class="carregandoImagem" src="/assets/circularLoadingPrimary.gif" alt="Carregando" />
@@ -292,6 +296,10 @@ async function renderVaccinesChart(country){
 }
 
 async function showNoDataAlert(){
+  if (alertShowed) return;
+
+  alertShowed = true;
+
   const alertContainer = document.querySelector(".alertContainer");
   alertContainer.style.display = 'flex';
   
@@ -306,5 +314,5 @@ function hideNoDataAlert(){
 
   setTimeout(() => {
     alertContainer.style.display = 'none';
-}, 301);
-}
+  }, 301);
+} 
